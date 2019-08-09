@@ -1,4 +1,5 @@
 import React from 'react';
+import Item from './Item';
 
 export default class List extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export default class List extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://0.0.0.0:8080/task")
+        fetch("http://46.101.114.69:8080/task")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -34,16 +35,14 @@ export default class List extends React.Component {
     render() {
         const { error, isLoaded, tasks } = this.state;
         if (error) {
-            return <div>Ошибка: {error.message}</div>;
+            return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
-            return <div>Загрузка...</div>;
+            return <div>Loading...</div>;
         } else {
             return (
                 <ul>
                     {tasks.map(task => (
-                        <li key={task.id}>
-                            {task.title}
-                        </li>
+                        <Item  key={task.id} id={task.id} title={task.title} />
                     ))}
                 </ul>
             );

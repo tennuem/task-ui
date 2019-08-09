@@ -43,7 +43,7 @@ export default class Form extends React.Component {
             }
         }
 
-        fetch('http://0.0.0.0:8080/task', {
+        fetch('http://46.101.114.69:8080/task', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
