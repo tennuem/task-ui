@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  backend:
+    image: tennuem/task
+    ports:
+      - 8080:8080
+  frontend:
+    image: tennuem/task-ui
+    ports:
+      - 80:3000
