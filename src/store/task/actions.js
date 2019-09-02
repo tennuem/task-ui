@@ -77,9 +77,25 @@ export function fetchTasks(url) {
     }
 }
 
-export function deleteTask(id) {
+function taskDeleteSuccess(id) {
     return {
         type: DELETE_TASK,
         payload: { id }
+    }
+}
+
+export function deleteTask(id) {
+    return (dispatch) => {
+        fetch("http://46.101.114.69:8080/task/" + id, { method: "DELETE" })
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                dispatch(tasksIsLoading(true));
+                return response;
+            })
+            .then((response) => response.json())
+            .then((task) => dispatch(taskDeleteSuccess(id)))
+            .catch(() => dispatch(tasksHasErrored(true)));
     }
 }
