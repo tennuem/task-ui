@@ -5,12 +5,9 @@ import { fetchTasks } from "../../store/task/actions";
 
 class TaskList extends React.Component {
     componentDidMount() {
-        this.props.fetchData("http://46.101.114.69:8080/task");
+        this.props.fetchData();
     }
     render() {
-
-        //console.log("render props", this.props);
-
         const { hasErrored, isLoading, tasks } = this.props;
         if (hasErrored) {
             return <p>Sorry! There was an error loading the items</p>;
@@ -34,9 +31,6 @@ class TaskList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
-    //console.log("mapStateToProps", state)
-
     return {
         hasErrored: state.tasks.hasErrored,
         isLoading: state.tasks.isLoading,

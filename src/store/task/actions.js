@@ -16,7 +16,6 @@ export function addTask(title, description) {
         fetch("http://46.101.114.69:8080/task", {
             method: "POST",
             headers: {
-                "Accept": "application/json",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -60,10 +59,10 @@ function tasksFetchSuccess(tasks) {
     }
 }
 
-export function fetchTasks(url) {
+export function fetchTasks() {
     return (dispatch) => {
         dispatch(tasksIsLoading(true));
-        fetch(url)
+        fetch("http://46.101.114.69:8080/task")
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
