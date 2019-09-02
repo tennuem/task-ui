@@ -4,21 +4,42 @@ export const TASKS_IS_LOADING = "TASKS_IS_LOADING";
 export const TASKS_FETCH_SUCCESS = "TASKS_FETCH_SUCCESS";
 export const DELETE_TASK = "DELETE_TASK";
 
-let incrementId = 0;
-
-export function addTask(title, description, isCompleted) {
+function taskAddSuccess(task) {
     return {
         type: ADD_TASK,
-        payload: {
-            id: ++incrementId,
-            title,
-            description,
-            isCompleted
-        }
+        payload: task.task
     }
 }
 
-function tasksHasErrored (bool){
+export function addTask(title, description) {
+    return (dispatch) => {
+        fetch("http://46.101.114.69:8080/task", {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                task: {
+                    title: title,
+                    description: description
+                }
+            })
+        })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                dispatch(tasksIsLoading(true));
+                return response;
+            })
+            .then((response) => response.json())
+            .then((task) => dispatch(taskAddSuccess(task)))
+            .catch(() => dispatch(tasksHasErrored(true)));
+    }
+}
+
+function tasksHasErrored(bool) {
     return {
         type: TASKS_HAS_ERRORED,
         payload: bool
@@ -56,7 +77,7 @@ export function fetchTasks(url) {
     }
 }
 
-export function deleteTask (id){
+export function deleteTask(id) {
     return {
         type: DELETE_TASK,
         payload: { id }

@@ -26,7 +26,7 @@ class AddTask extends React.Component {
 
     handleSubmit(event) {
         const { title, description } = this.state
-        this.props.addTask(title, description, false);
+        this.props.addTask(title, description);
         this.setState({
             title: '',
             description: ''
