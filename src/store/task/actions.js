@@ -13,7 +13,7 @@ function taskAddSuccess(task) {
 
 export function addTask(title, description) {
     return (dispatch) => {
-        fetch("http://46.101.114.69:8080/task", {
+        fetch("/api/task", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -62,7 +62,7 @@ function tasksFetchSuccess(tasks) {
 export function fetchTasks() {
     return (dispatch) => {
         dispatch(tasksIsLoading(true));
-        fetch("http://46.101.114.69:8080/task")
+        fetch("/api/task")
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -85,7 +85,7 @@ function taskDeleteSuccess(id) {
 
 export function deleteTask(id) {
     return (dispatch) => {
-        fetch("http://46.101.114.69:8080/task/" + id, { method: "DELETE" })
+        fetch("/api/task/" + id, { method: "DELETE" })
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
